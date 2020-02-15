@@ -2,3 +2,4 @@ Pipfile
 Pipfile.lock
 .ipynb_checkpoints/
 __pycache__
+env/
