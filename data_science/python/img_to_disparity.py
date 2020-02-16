@@ -1,6 +1,5 @@
 import cv2
 from matplotlib import pyplot as plt
-from numpy import ndim
 
 
 def img_to_disp(img_tup):
@@ -20,7 +19,7 @@ def img_to_disp(img_tup):
         # Convert it if not
         imgL_trim = cv2.cvtColor(imgL_trim, cv2.COLOR_BGR2GRAY)
         imgR_trim = cv2.cvtColor(imgR_trim, cv2.COLOR_BGR2GRAY)
-    
+
     # Compute and return disparity values
     disparity = stereo.compute(imgL_trim, imgR_trim)
     return disparity
