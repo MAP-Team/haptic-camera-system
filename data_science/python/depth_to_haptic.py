@@ -12,15 +12,15 @@ def depth_to_haptic(disparity):
     # Averages out the the depth values by column
     avg_disparity = []
     for row in disparity:
-        for index in range(0, len(row)-1):
+        for index in range(0, len(row)):
             avg_disparity[index] += row[index]
-    for index in range(0, len(avg_disparity)-1):
+    for index in range(0, len(avg_disparity)):
         avg_disparity[index] /= len(disparity)
 
     # Converts the averaged depth values into haptic values
     haptic_values = []
     horizontal_resolution = len(avg_disparity)
-    for pixel_position in range(0, horizontal_resolution-1):
+    for pixel_position in range(0, horizontal_resolution):
         disparity_value = (256-avg_disparity[pixel_position])
         theta = np.radians(((pixel_position / horizontal_resolution) - 0.5) * 62.2)
         x, y = (np.sin(theta) * disparity_value), (np.cos(theta) * disparity_value)
