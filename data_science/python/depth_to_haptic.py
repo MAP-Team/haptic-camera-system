@@ -1,7 +1,7 @@
 import cProfile
 import numpy as np
 
-def depth_to_haptic(disparity):
+def depth_to_haptic(disparity, camera_fov=62.2):
     ''' 
     A function to convert depth data into haptic data by converting a 
     disparity array to 
@@ -23,7 +23,7 @@ def depth_to_haptic(disparity):
     horizontal_resolution = len(avg_disparity)
     for pixel_position in range(0, horizontal_resolution-1):
         disparity_value = (256-avg_disparity[pixel_position])
-        theta = np.radians(((pixel_position / horizontal_resolution) - 0.5) * 62.2)
+        theta = np.radians(((pixel_position / horizontal_resolution) - 0.5) * camera_fov)
         x, y = (np.sin(theta) * disparity_value), (np.cos(theta) * disparity_value)
         haptic_values.append((x, y))
     return haptic_values

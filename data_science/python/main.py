@@ -2,7 +2,8 @@ from stream_object import Stream
 from img_to_disparity import img_to_disp as i2d
 from depth_to_haptic import depth_to_haptic
 import cProfile
-# from matplotlib import pyplot as plt
+
+import matplotlib.pyplot as plt
 
 
 cam1 = Stream()
@@ -14,7 +15,7 @@ def print_images():
         tup = cam1.read()
         disp = i2d(tup)
         haptic = depth_to_haptic(disp)
-        print(haptic)
+        plt.imshow(haptic)
         count += 1
 
     cam1.stop()
