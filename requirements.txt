@@ -90,7 +90,7 @@ sqlparse==0.3.0
 sympy==1.4
 tb-nightly==2.1.0a20191206
 tensorboard==2.0.1
-tensorflow==2.0.0
+tensorflow==2.0.1
 tensorflow-estimator==2.0.1
 tensorflow-hub==0.7.0
 termcolor==1.1.0
