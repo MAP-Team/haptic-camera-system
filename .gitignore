@@ -1,5 +1,6 @@
 Pipfile
 Pipfile.lock
 .ipynb_checkpoints/
+.vscode
 __pycache__
 env/
