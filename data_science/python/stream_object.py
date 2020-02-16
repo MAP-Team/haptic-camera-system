@@ -4,6 +4,9 @@ from imutils.video import FPS
 import argparse
 import imutils
 import cv2
+from queue import Queue
+from threading import Thread
+
 
 class Stream:
     # created a *threaded* video stream, allow the camera sensor to warmup,
@@ -11,36 +14,55 @@ class Stream:
     print("[INFO] sampling THREADED frames from webcam...")
     
     #Constructor creates a list
-    def __init__(self):
-        self.queue = list()
-      
-    #Adding elements to queue
-    def enqueue(self,data):
-        #Checking to avoid duplicate entry (not mandatory
-        self.queue.insert(0,data)
+    def __init__(self, queue_size=128):
+        self.vs1 = WebcamVideoStream(src=1).start()
+        self.vs2 = WebcamVideoStream(src=2).start()        
+        
+        self.stopped = False
+        self.Q = Queue(maxsize=queue_size)
     
-    #Removing the last element from the queue
-    def dequeue(self):
-      if len(self.queue)>0:
-          return self.queue.pop()
-      return ("Queue Empty!")
-    
-    #Getting the size of the queue
-    def size(self):
-        return len(self.queue)
+    def start(self):
+        t = Thread(target=self.run, args=())
+        t.daemon = True
+        t.start()
+        return self
 
-    #printing the elements of the queue
-    def printQueue(self):
-        print(self.queue)
-        return self.queue
+
+
+    #     self.queue = list()
+      
+    # #Adding elements to queue
+    # def enqueue(self,data):
+    #     #Checking to avoid duplicate entry (not mandatory
+    #     self.queue.insert(0,data)
+    
+    # #Removing the last element from the queue
+    # def dequeue(self):
+    #   if len(self.queue)>0:
+    #       return self.queue.pop()
+    #   return ("Queue Empty!")
+    
+    # #Getting the size of the queue
+    # def size(self):
+    #     return len(self.queue)
+
+    # #printing the elements of the queue
+    # def printQueue(self):
+    #     print(self.queue)
+    #     return self.queue
+
+    def read(self):
+        return self.Q.get()
+
+    def stop(self):
+        self.stopped = True
 
 
     def run(self):
-        self.vs1 = WebcamVideoStream(src=1).start()
-        self.vs2 = WebcamVideoStream(src=1).start()
         self.fps = FPS().start()
         # loop over some frames...this time using the threaded stream
-        while self.fps._numFrames < 100:
+        # while self.fps._numFrames < 100:
+        while not self.stopped:
             # grab the frame from the threaded video stream and resize it
             # to have a maximum width of 400 pixels
             frame1 = self.vs1.read()
@@ -48,7 +70,8 @@ class Stream:
             frame2 = self.vs2.read()
             frame2 = imutils.resize(frame2, width=400)
             stereo = (frame1, frame2)
-            self.enqueue(stereo)          
+            self.Q.put(stereo)         
+
             # check to see if the frame should be displayed to our screen
             # if args["display"] > 0:
             #     cv2.imshow("Frame", frame)
@@ -56,7 +79,7 @@ class Stream:
             # update the FPS counter
             self.fps.update()
         # stop the timer and display FPS information
-        self.fps.stop()
+        # self.fps.stop()
         print("[INFO] elasped time: {:.2f}".format(self.fps.elapsed()))
         print("[INFO] approx. FPS: {:.2f}".format(self.fps.fps()))
         # do a bit of cleanup
@@ -66,9 +89,10 @@ class Stream:
 
 
 
-cam1 = Stream()
-cam1.run()
-cam1.printQueue()
+# if __name__ == '_main__':
+#     cam1 = Stream()
+#     cam1.run()
+#     cam1.printQueue()
 
 
 
