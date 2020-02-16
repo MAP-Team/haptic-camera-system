@@ -9,5 +9,5 @@ cam1.run()
 while cam1.size() > 0:
     tup = cam1.dequeue()
     disp = i2d(tup)
-    haptic = depth_to_haptic(disp)
+    haptic = depth_to_haptic(disp, 62.2)
     print(haptic)
