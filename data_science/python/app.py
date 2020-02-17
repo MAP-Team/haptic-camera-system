@@ -1,5 +1,5 @@
 from flask import Flask, render_template, Response
-from flask_stream import VideoCamera
+from flask_stream import VideoCameraLeft, VideoCameraRight
 
 app = Flask(__name__)
 
@@ -15,13 +15,13 @@ def gen(camera):
 
 @app.route('/video_feed_left')
 def video_feed_left():
-    lvs = VideoCamera()
+    lvs = VideoCameraLeft()
     return Response(gen(lvs),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/video_feed_right')
 def video_feed_right():
-    rvs = VideoCamera()
+    rvs = VideoCameraRight()
     return Response(gen(rvs),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
