@@ -13,7 +13,7 @@ def print_images():
     count = 0
     while count < 100:
         tup = cam1.read()
-        disp = i2d(tup)
+        disp = i2d(tup, 16)
         haptic = depth_to_haptic(disp)
         plt.imshow(haptic)
         count += 1
