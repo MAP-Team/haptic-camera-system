@@ -1,77 +1,30 @@
-<<<<<<< HEAD
-# import the necessary packages
-from video_stream import SingleMotionDetector
-from imutils.video import VideoStream
-from flask import Response
-from flask import Flask
-from flask import render_template
-import threading
-import argparse
-import datetime
-import imutils
-import time
-import cv2
-=======
-# import requests
-import matplotlib.pyplot as plt
-from flask import Flask, render_template
-from stream_object import Stream
-from img_to_disparity import img_to_disp as i2d
-from depth_to_haptic import depth_to_haptic
+from flask import Flask, render_template, Response
+from flask_stream import VideoCamera
 
-
-# initialize the output frame and a lock used to ensure thread-safe
-# exchanges of the output frames (useful when multiple browsers/tabs
-# are viewing the stream)
-outputFrame = None
-lock = threading.Lock()
-# initialize a flask object
 app = Flask(__name__)
-<<<<<<< HEAD
-# initialize the video stream and allow the camera sensor to
-# warmup
-#vs = VideoStream(usePiCamera=1).start()
-vs = VideoStream(src=0).start()
-time.sleep(2.0)
-=======
-stream = Stream()
-stream.start()
 
-
-
-@app.route("/")
+@app.route('/')
 def index():
-<<<<<<< HEAD
-	# return the rendered template
-	return render_template("index.html")
+    return render_template('index.html')
+
+def gen(camera):
+    while True:
+        frame = camera.get_frame()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+
+@app.route('/video_feed_left')
+def video_feed_left():
+    lvs = VideoCamera()
+    return Response(gen(lvs),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/video_feed_right')
+def video_feed_right():
+    rvs = VideoCamera()
+    return Response(gen(rvs),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
-def detect_motion(frameCount):
-	# grab global references to the video stream, output frame, and
-	# lock variables
-	global vs, outputFrame, lock
-	# initialize the motion detector and the total number of frames
-	# read thus far
-	md = SingleMotionDetector(accumWeight=0.1)
-	total = 0
-
-    # loop over frames from the video stream
-	while True:
-		# read the next frame from the video stream, resize it,
-		# convert the frame to grayscale, and blur it
-		frame = vs.read()
-		frame = imutils.resize(frame, width=400)
-		gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-		gray = cv2.GaussianBlur(gray, (7, 7), 0)
-		# grab the current timestamp and draw it on the frame
-		timestamp = datetime.datetime.now()
-		cv2.putText(frame, timestamp.strftime(
-			"%A %d %B %Y %I:%M:%S%p"), (10, frame.shape[0] - 10),
-			cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
-=======
-    """Return homepage."""
-    tup = stream.read()
-    disp = i2d(tup, 16)
-    haptic = depth_to_haptic(disp)
-    plt.imshow(haptic)
-    return render_template('index.html', tup=tup, haptic=haptic)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', debug=True)
