@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # import the necessary packages
 from video_stream import SingleMotionDetector
 from imutils.video import VideoStream
@@ -10,6 +11,14 @@ import datetime
 import imutils
 import time
 import cv2
+=======
+# import requests
+import matplotlib.pyplot as plt
+from flask import Flask, render_template
+from stream_object import Stream
+from img_to_disparity import img_to_disp as i2d
+from depth_to_haptic import depth_to_haptic
+
 
 # initialize the output frame and a lock used to ensure thread-safe
 # exchanges of the output frames (useful when multiple browsers/tabs
@@ -18,15 +27,21 @@ outputFrame = None
 lock = threading.Lock()
 # initialize a flask object
 app = Flask(__name__)
+<<<<<<< HEAD
 # initialize the video stream and allow the camera sensor to
 # warmup
 #vs = VideoStream(usePiCamera=1).start()
 vs = VideoStream(src=0).start()
 time.sleep(2.0)
+=======
+stream = Stream()
+stream.start()
+
 
 
 @app.route("/")
 def index():
+<<<<<<< HEAD
 	# return the rendered template
 	return render_template("index.html")
 
@@ -53,3 +68,10 @@ def detect_motion(frameCount):
 		cv2.putText(frame, timestamp.strftime(
 			"%A %d %B %Y %I:%M:%S%p"), (10, frame.shape[0] - 10),
 			cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
+=======
+    """Return homepage."""
+    tup = stream.read()
+    disp = i2d(tup, 16)
+    haptic = depth_to_haptic(disp)
+    plt.imshow(haptic)
+    return render_template('index.html', tup=tup, haptic=haptic)

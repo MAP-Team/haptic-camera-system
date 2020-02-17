@@ -14,9 +14,15 @@ def print_images():
     while count < 10:
         plt.clf()
         tup = cam1.read()
+<<<<<<< HEAD
         disp = i2d(tup)
         haptic = np.array(depth_to_haptic(disp))
         plt.scatter(haptic[:, 0], haptic[:, 1])
+=======
+        disp = i2d(tup, 16)
+        haptic = depth_to_haptic(disp)
+        plt.imshow(haptic)
+>>>>>>> 196a43dbfcf7eee230b3ae97cd2454f377264a9b
         count += 1
 
     cam1.stop()
