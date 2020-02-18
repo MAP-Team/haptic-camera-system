@@ -1,12 +1,24 @@
-<!-- templates/base.html -->
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
   <head>
-    <title>Gif Search</title>
-    {{ url_for('static', filename='styles.css') }}
-    <link rel="stylesheet" href="../static/styles.css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VideoCapture</title>
+    <meta name="description" content="Darkster is a free, open source Bootstrap 4 theme" />
+    <meta name="generator" content="Themestr.app">
+    <link rel="icon" href="http://themes.guide/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="http://themes.guide/favicon.ico" type="image/x-icon" />
+    <meta property="og:image" name="twitter:image" content="http://bootstrap.themes.guide/assets/ss_darkster.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@ThemesGuide">
+    <meta name="twitter:creator" content="@ThemesGuide">
+    <meta name="twitter:title" content="Open-source Bootstrap 4 Themes">
+    <meta name="twitter:description" content="Download Darkster - free, open source Bootstrap 4 theme by Themes.guide">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/3.0.0/css/ionicons.css" rel="stylesheet">
+     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  </head>
   </head>
   <body>
     {% block content %}

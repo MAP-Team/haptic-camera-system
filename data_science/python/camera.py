@@ -1,6 +1,6 @@
 import cv2
 
-class VideoCameraLeft(object):
+class LeftCamera(object):
     def __init__(self):
         self.video = cv2.VideoCapture(1)
         # Using OpenCV to capture from device 0. If you have trouble capturing
@@ -21,7 +21,7 @@ class VideoCameraLeft(object):
         ret, jpeg = cv2.imencode('.jpg', image)
         return jpeg.tobytes()
 
-class VideoCameraRight(object):
+class RightCamera(object):
     def __init__(self):
         self.video = cv2.VideoCapture(2)
         # Using OpenCV to capture from device 0. If you have trouble capturing

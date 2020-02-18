@@ -6,6 +6,7 @@ import imutils
 import cv2
 from queue import Queue
 from threading import Thread
+from camera import LeftCamera, RightCamera
 
 
 class Stream:
@@ -15,12 +16,16 @@ class Stream:
     
     #Constructor creates a list
     def __init__(self, queue_size=128):
-        self.vs1 = WebcamVideoStream(src=1).start()
-        self.vs2 = WebcamVideoStream(src=2).start()        
+        self.vs1 = WebcamVideoStream(src=1).start() #For anylizing 
+        self.lvs = LeftCamera() #For streaming to flask 
+        self.vs2 = WebcamVideoStream(src=2).start() #For anylizing   
+        self.rvs = RightCamera() #For streaming to flask
+      
         
         self.stopped = False
         self.Q = Queue(maxsize=queue_size)
-    
+
+    #Start thread 
     def start(self):
         t = Thread(target=self.run, args=())
         t.daemon = True
@@ -57,7 +62,7 @@ class Stream:
     def stop(self):
         self.stopped = True
 
-
+    
     def run(self):
         self.fps = FPS().start()
         # loop over some frames...this time using the threaded stream
