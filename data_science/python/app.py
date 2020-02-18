@@ -1,5 +1,6 @@
 from flask import Flask, render_template, Response
 from stream import Stream
+from main import get_frame
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -9,11 +10,6 @@ stream = Stream()
 def index():
     return render_template('index.html')
 
-def gen(stream):
-    while True:
-        frame = stream.get_frame()
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
 @app.route('/video_feed_left')
 def video_feed_left():

@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 
 import io
 
-
 cams = Stream()
 cams.start()
 
@@ -26,4 +25,9 @@ def print_images():
     return buf
 
 
-print_images()
+#streams video from opencv to flask 
+def gen(stream):
+    while True:
+        frame = stream.get_frame()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')

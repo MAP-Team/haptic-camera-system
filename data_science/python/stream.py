@@ -61,7 +61,8 @@ class Stream:
 
     def stop(self):
         self.stopped = True
-
+    
+    
     
     def run(self):
         self.fps = FPS().start()
@@ -91,6 +92,15 @@ class Stream:
         # cv2.destroyAllWindows()
         self.vs1.stop()
         self.vs2.stop()
+        return frame1, frame2
+
+        def get_frame(self):
+            success, image = self.video.read()
+            # We are using Motion JPEG, but OpenCV defaults to capture raw images,
+            # so we must encode it into JPEG in order to correctly display the
+            # video stream.
+            ret, jpeg = cv2.imencode('.jpg', image)
+            return jpeg.tobytes()
 
 
 

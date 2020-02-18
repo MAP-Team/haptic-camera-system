@@ -29,5 +29,7 @@ def depth_to_haptic(disparity, camera_fov=62.2, max_depth=200):
         haptic_values.append((x, y))
     return haptic_values
 
+    
+
 if (__name__ == '__main__'):
     cProfile.run('depth_to_haptic(disparity)')
