@@ -6,19 +6,24 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-cam1 = Stream()
-cam1.start()
+cams = Stream()
+cams.start()
 
 def print_images():
     count = 0
     while count < 10:
         plt.clf()
-        tup = cam1.read()
+        tup = cams.read()
         disp = i2d(tup, 16)
         haptic = depth_to_haptic(disp)
         plt.imshow(haptic)
         count += 1
 
-    cam1.stop()
+    cams.stop()
 
-print_images()
+#streams video from opencv to flask 
+def gen(stream):
+    while True:
+        frame = stream.get_frame()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
