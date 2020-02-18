@@ -23,7 +23,7 @@ class VideoCameraLeft(object):
 
 class VideoCameraRight(object):
     def __init__(self):
-        self.video = cv2.VideoCapture(0)
+        self.video = cv2.VideoCapture(2)
         # Using OpenCV to capture from device 0. If you have trouble capturing
         # from a webcam, comment the line below out and use a video file
         # instead.

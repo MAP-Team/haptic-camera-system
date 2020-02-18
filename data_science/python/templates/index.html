@@ -16,12 +16,16 @@
     <meta name="twitter:description" content="Download Darkster - free, open source Bootstrap 4 theme by Themes.guide">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/3.0.0/css/ionicons.css" rel="stylesheet">
-    <link href="./theme.css" rel="stylesheet">
-        <link href="./page.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="theme.css">
+    <link rel="stylesheet" href="../static/styles.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 
   </head>
   <body>
+{% block content %}
 
+ <h1>Haptic Camera System</h1> 
+<div class="container">
   <div class="row">
   <div class="column">
   <div class="column">
@@ -29,6 +33,8 @@
     <img src="{{ url_for('video_feed_right') }}" style="width:49%">
   </div>
 </div>
+</div>
+{% endblock %}
 
 </body>
 </html>
