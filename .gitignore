@@ -4,3 +4,4 @@ Pipfile.lock
 .vscode
 __pycache__
 env/
+.DS_Store
