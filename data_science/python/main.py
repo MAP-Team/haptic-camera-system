@@ -5,20 +5,25 @@ import cProfile
 import numpy as np
 import matplotlib.pyplot as plt
 
+import io
 
-cam1 = Stream()
-cam1.start()
+
+cams = Stream()
+cams.start()
 
 def print_images():
-    count = 0
-    while count < 10:
-        plt.clf()
-        tup = cam1.read()
-        disp = i2d(tup, 16)
-        haptic = depth_to_haptic(disp)
-        plt.imshow(haptic)
-        count += 1
+    tup = cam1.read()
 
-    cam1.stop()
+    # First send the tuple of images to i2d
+    disp = i2d(tup, 16)
+
+    # Then send the disparity to haptic
+    haptic = depth_to_haptic(disp)
+    plt.scatter(haptic[:, 0], haptic[:, 1])
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png')
+    buf.seek(0)
+    return buf
+
 
 print_images()

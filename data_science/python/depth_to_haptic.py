@@ -2,13 +2,13 @@ import cProfile
 import numpy as np
 
 def depth_to_haptic(disparity, camera_fov=62.2, max_depth=200):
-    ''' 
-    A function to convert depth data into haptic data by converting a 
-    disparity array to 
+    '''
+    A function to convert depth data into haptic data by converting a
+    disparity array to
         Args:
             disparity (array): an array of two images' depth values
         Returns:
-            haptic_values (array): an array of haptic values 
+            haptic_values (array): an array of haptic values
     '''
     # # Averages out the the depth values by column
     # avg_disparity = [0 for value in disparity[0]]
