@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+
 
 {% block content %}
 
@@ -6,8 +8,13 @@
   <div class="row">
   <div class="column">
   <div class="column">
-    <img src="{{ url_for('video_feed_left') }}" style="width:49%">
-    <img src="{{ url_for('video_feed_right') }}" style="width:49%">
+    <img src="{{ url_for('video_stream_left') }}" style="width:49%">
+    <img src="{{ url_for('video_stream_right') }}" style="width:49%">
+  </div>
+  <div class="column">
+    <img src="{{ url_for('video_stream_disp') }}" style="width:49%">
+  </div>
+  <div class="column">
   </div>
 </div>
 </div>

@@ -6,16 +6,16 @@ def img_to_disp(img_tup, height):
     """Converts a tuple of images to an opencv disparity with height in px"""
     # Creating objects to manipulate
     stereo = cv2.StereoBM_create(numDisparities=16, blockSize=15)
-    imgL, imgR = img_tup
+    imgL_trim, imgR_trim = img_tup
 
     # Trimming images to 16px tall, starting at y=125px
     h = height
     y = 125
-    imgL_trim = imgL[y:y + h].copy()
-    imgR_trim = imgR[y:y + h].copy()
+    # imgL_trim = imgL[y:y + h].copy()
+    # imgR_trim = imgR[y:y + h].copy()
 
     # Check if image is in color
-    if imgL.ndim == 3:
+    if imgL_trim.ndim == 3:
         # Convert it to grayscale if so
         imgL_trim = cv2.cvtColor(imgL_trim, cv2.COLOR_BGR2GRAY)
         imgR_trim = cv2.cvtColor(imgR_trim, cv2.COLOR_BGR2GRAY)
