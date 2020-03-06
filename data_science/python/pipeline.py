@@ -22,9 +22,9 @@ class Pipeline:
     
     #Constructor creates a list
     def __init__(self, fixed_size):
-        self.vs1 = WebcamVideoStream(src=2) #For anylizing 
+        self.vs1 = WebcamVideoStream(src=0) #For anylizing 
         self.vs1.start()
-        self.vs2 = WebcamVideoStream(src=1) #For anylizing 
+        self.vs2 = WebcamVideoStream(src=0) #For anylizing 
         self.vs2.start()
         self.cb = CircularBuffer(fixed_size)
         self.stopped = False

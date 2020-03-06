@@ -29,10 +29,10 @@ def video_stream_right():
     return Response(pipe.gen('right'),
             mimetype='multipart/x-mixed-replace; boundary=stream_right')
 
-@app.route('/video_stream_disp')
-def video_stream_disp():
-    return Response(pipe.gen('disp'),
-            mimetype='multipart/x-mixed-replace; boundary=stream_right')
+# @app.route('/video_stream_disp')
+# def video_stream_disp():
+#     return Response(pipe.gen('disp'),
+#             mimetype='multipart/x-mixed-replace; boundary=stream_right')
 
 
 if __name__ == '__main__':
