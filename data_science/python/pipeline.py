@@ -19,7 +19,7 @@ class Pipeline:
     # created a *threaded* video stream, allow the camera sensor to warmup,
     # and start the FPS counter
     print("[INFO] sampling THREADED frames from webcam...")
-    
+
     #Constructor creates a list
     def __init__(self, fixed_size):
         self.vs1 = WebcamVideoStream(src=0) #For anylizing 
@@ -41,7 +41,7 @@ class Pipeline:
 
     def stop(self):
         self.stopped = True
-    
+
     def capture(self):
 		# keep looping infinitely
 			# if the thread indicator variable is set, stop the
@@ -50,9 +50,9 @@ class Pipeline:
             left_captured_frame = self.vs1.read()
             right_captured_frame = self.vs2.read()
             self.cb.enqueue((left_captured_frame, right_captured_frame))
-            
-            
-            
+
+
+
     def push(self):
         pushed_stereo = self.capture() 
         self.cb.enqueue(pushed_stereo) 
@@ -71,7 +71,7 @@ class Pipeline:
         return buf.read()
 
     def get_depth(self):
-        plt.clf()        
+        plt.clf ()
         # Then send the disparity to haptic
         self.haptic = np.array(depth_to_haptic(self.disp))
         plt.scatter(self.haptic[:, 0], self.haptic[:, 1])
@@ -79,7 +79,7 @@ class Pipeline:
         plt.savefig(buf, format='png')
         buf.seek(0)
         return buf.read()
-        
+
 
     def get_frame(self):
         stereo_feed = self.stereo

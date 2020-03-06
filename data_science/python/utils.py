@@ -10,8 +10,8 @@ import io
 
 def get_depth(self, stereo):
         plt.clf()
-        
-        
+
+
         # First send the tuple of images to i2d
         disp = i2d(stereo, 16)
 
@@ -24,13 +24,13 @@ def get_depth(self, stereo):
         # plt.clf()
 
         plt.imshow(disp, 'gray')
-        buf1 = io.BytesIO()
+        buf = io.BytesIO()
 
         plt.savefig(buf1, format='png')
-        buf1.seek(0)
+        buf.seek(0)
 
-        return buf1.read() # buf.read(), 
-    
+        return buf.read() # buf.read(), 
+
 
 
 
