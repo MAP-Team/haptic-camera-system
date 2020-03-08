@@ -82,10 +82,10 @@ class Pipeline:
 
 
     def get_frame(self):
-        stereo_feed = self.stereo
+        self.stereo = self.pull()
         # depth = self.process(stereo_feed)
-        left_feed = stereo_feed[0]
-        right_feed = stereo_feed[1]
+        left_feed = self.stereo[0]
+        right_feed = self.stereo[1]
 
         # We are using Motion JPEG, but OpenCV defaults to capture raw images,
         # so we must encode it into JPEG in order to correctly display the
@@ -95,9 +95,8 @@ class Pipeline:
         return l_jpeg.tobytes(), r_jpeg.tobytes()    
 
     def gen(self, dir):
-        self.stereo = self.pull()
-        self.current_stream = self.get_frame()
         while True:
+            self.current_stream = self.get_frame()
             if dir == 'left':
                 yield (b'--stream_left\r\n'
                     b'Content-Type: image/jpeg\r\n\r\n' + self.current_stream[0] + b'\r\n\r\n')
